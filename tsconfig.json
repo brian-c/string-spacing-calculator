@@ -1,0 +1,10 @@
+{
+	"extends": [
+		"@tsconfig/strictest/tsconfig",
+	],
+	"compilerOptions": {
+		"lib": ["ES2023"],
+		"allowJs": true
+	},
+	"include": ["src"]
+}

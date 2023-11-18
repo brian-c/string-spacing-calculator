@@ -1,0 +1,8 @@
+.number-field {
+	width: 5em;
+}
+
+.row {
+	display: inline-flex;
+	gap: 1em;
+}
