@@ -171,8 +171,6 @@ export default function App() {
 		</section>
 
 		<section>
-			<div>✂</div>
-
 			<svg
 				viewBox="${HAIRLINE / -2} ${HAIRLINE / -2} ${width + HAIRLINE} ${HEIGHT + HAIRLINE}"
 				style="${{ height: `${HEIGHT}in` }}"
@@ -218,6 +216,17 @@ export default function App() {
 					`;
 				})}
 			</svg>
+
+			<br />
+
+			<button type="button" onClick="${print}">Print</button>
+		</section>
+
+		<section>
+			Source: ${' '}
+			<a href="https://www.github.com/brian-c/string-spacing-calculator">
+				brian-c/string-spacing-calculator
+			</a>
 		</section>
 	</${Fragment}>`;
 }
