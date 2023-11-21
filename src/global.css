@@ -2,6 +2,10 @@ html {
 	font-family: sans-serif;
 }
 
+body {
+	margin: calc(1rem + 2vw);
+}
+
 section {
-	margin-block: 1em;
+	margin-block: 1rem;
 }
