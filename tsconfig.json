@@ -1,6 +1,6 @@
 {
 	"extends": [
-		"@tsconfig/strictest/tsconfig",
+		"@tsconfig/strictest",
 	],
 	"compilerOptions": {
 		"lib": ["ES2022"],

@@ -1,11 +1,15 @@
 html {
+	display: grid;
 	font-family: sans-serif;
-}
-
-body {
-	margin: calc(1rem + 2vw);
+	place-content: center;
 }
 
 section {
 	margin-block: 1rem;
+}
+
+input[type="number"] {
+	field-sizing: content;
+	min-width: 4ch;
+	width: auto;
 }

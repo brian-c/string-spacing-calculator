@@ -3,23 +3,23 @@ import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 import styles from './app.module.css';
 
-const HEIGHT = 1/2;
+const HEIGHT = 1 / 2;
 const HAIRLINE = 0.005;
 const MIN_LINES = 8;
 
-function getLocalStorageJson(key: string) {
+function getLocalStorageJson<T>(key: string) {
 	const storedValueJson = localStorage.getItem(key);
-	return storedValueJson === null ? undefined : JSON.parse(storedValueJson);
+	return storedValueJson === null ? undefined : JSON.parse(storedValueJson) as T;
 }
 
 function useLocalStorage<T>(key: string, defaultValue: T) {
-	const storedValue = getLocalStorageJson(key);
+	const storedValue = getLocalStorageJson<T>(key);
 	const [value, setValue] = useState<T>(storedValue !== undefined ? storedValue : defaultValue);
 
 	function setWithStorage(value: T) {
 		localStorage.setItem(key, JSON.stringify(value));
-		const storedValue = getLocalStorageJson(key);
-		setValue(storedValue);
+		const storedValue = getLocalStorageJson<T>(key);
+		setValue(storedValue ?? defaultValue);
 	}
 
 	return [value, setWithStorage] as const;
@@ -27,14 +27,14 @@ function useLocalStorage<T>(key: string, defaultValue: T) {
 
 export default function App() {
 	const [widthValue, setWidth] = useLocalStorage('width-value', (1+5/8).toString());
-	const [sideGapValue, setSideGap] = useLocalStorage('side-gap-values', ['150', '150']);
+	const [sideGapValue, setSideGap] = useLocalStorage('side-gap-values', ['150', '150'] as [string, string]);
 	const [sideGapsEqual, setSideGapsEqual] = useLocalStorage('side-gaps-equal', true);
-	const [configValue, setConfig] = useLocalStorage('config-value', '49\n62\n84\n108');
 	const [inCourseGapValue, setInCourseGap] = useLocalStorage('in-course-gap-value', '70');
+	const [configValue, setConfig] = useLocalStorage('config-value', '49\n62\n84\n108');
 
 	function handleSideGapInput(event: InputEvent, index: number) {
 		if (!(event.target instanceof HTMLInputElement)) return;
-		const newSideGaps = [...sideGapValue];
+		const newSideGaps = structuredClone(sideGapValue);
 		if (sideGapsEqual) {
 			newSideGaps.fill(event.target.value);
 		} else {
@@ -168,14 +168,17 @@ export default function App() {
 						<option value="10;13;17;26;36;46">Regular Slinky</option>
 						<option value="8, 8;10, 10;8, 14;11, 24;17, 32;22, 40">12-String Slinky</option>
 					</optgroup>
+
 					<optgroup label="Bass">
 						<option value="50;70;85;105">Bass Slinky</option>
 						<option value="49;62;84;108">GFS Brite Flats (bass)</option>
 					</optgroup>
+
 					<optgroup label="Mandolin">
 						<option value="11, 11;15, 15;26, 26;40, 40">D'Addario EJ74</option>
 						<option value="12, 12;16, 16;24, 24;36, 36">D'Addario EJ63i (doubled)</option>
 					</optgroup>
+
 					<option value="${configValue.split('\n').map(s => s.trim()).join(';')}">--</option>
 				</select>
 			</label>
